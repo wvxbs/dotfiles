@@ -1,0 +1,33 @@
+### ALIASES  ### 
+ 
+# package manager
+alias dnfup='sudo dnf upgrade -y && sudo dnf update -y'
+alias dnfin='sudo dnf install'
+alias dnfrm='sudo dnf remove'
+alias dnfau='sudo dnf autoremove -y'
+ 
+# docker
+alias docker-run='sudo docker run'
+alias cup='sudo docker-compose up --force-recreate --remove-orphans'
+alias cupd='sudo docker0compose up --force-recreate --remove-orphans -d'
+alias cdev='sudo docker-compose -f docker-compose-dev.yml up --force-recreate --remove-orphans'
+alias cdevd='sudo docker-compose -f docker-compose-dev.yml up --force-recreate --remove-orphans -d'
+alias cbuild='sudo docker-compose build'
+alias cdown='sudo docker-compose down --remove-orphans'
+ 
+# navigation
+alias ls='ls -lah --color=auto'
+alias ..='cd ..'
+alias repos='cd ~/repos'
+ 
+# mkdir with create parents argument
+alias mkdir='mkdir -pv'
+ 
+# better file manipulation 
+alias mv='mv -i' 
+alias cp='cp -i' 
+alias rm='rm -i' 
+alias ln='ln -i' 
+ 
+# better vim
+alias vim='nvim' 
