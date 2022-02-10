@@ -18,7 +18,7 @@ alias cdown='sudo docker-compose down --remove-orphans'
 # navigation
 alias ls='ls -lah --color=auto'
 alias ..='cd ..'
-alias repos='cd ~/repos'
+alias repos='cd ~/Documentos/repos'
  
 # mkdir with create parents argument
 alias mkdir='mkdir -pv'
@@ -31,3 +31,6 @@ alias ln='ln -i'
  
 # better vim
 alias vim='nvim' 
+
+# undervolt 
+alias und='sudo undervolt --core -150'
