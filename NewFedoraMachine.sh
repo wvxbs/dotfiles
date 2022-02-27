@@ -5,7 +5,9 @@ sudo dnf update -y
 
 sudo dnf upgrade -y
 
-sudo dnf install -y firefox geary git neofetch nodejs python gnome-pomodoro dnf-plugins-core flatpak neovim 
+sudo dnf install -y firefox geary git neofetch npm python python3 python-pip marker gnome-pomodoro dnf-plugins-core flatpak neovim 
+
+sudo dnf install -y akmod-nvidia install xorg-x11-drv-nvidia-
 
 sudo dnf remove -y docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-selinux docker-engine-selinux docker-engine
 
@@ -22,6 +24,10 @@ sudo dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.re
 sudo dnf install -y gh
 
 curl -s -o- https://raw.githubusercontent.com/rafaelmardojai/firefox-gnome-theme/master/scripts/install-by-curl.sh | bash
+
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/denysdovhan/gnome-terminal-one/master/one-dark.sh)"
+
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/denysdovhan/gnome-terminal-one/master/one-light.sh)"
 
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
