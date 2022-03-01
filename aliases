@@ -44,6 +44,7 @@ alias commit='git commit -m'
 alias checkout='git checkout'
 alias adall='git add .'
 alias add='git add'
+alias push='git push'
 
 # github cli
 alias gclone='gh repo clone '
