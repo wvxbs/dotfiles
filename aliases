@@ -19,7 +19,8 @@ alias cdown='sudo docker-compose down --remove-orphans'
 alias ls='ls -lah --color=auto'
 alias ..='cd ..'
 alias repos='cd ~/Documentos/repos'
- 
+alias pro='~/Documentos/Projetos'
+
 # mkdir with create parents argument
 alias mkdir='mkdir -pv'
  
@@ -31,6 +32,18 @@ alias ln='ln -i'
  
 # better vim
 alias vim='nvim' 
+alias svim='sudo nvim'
 
 # undervolt 
 alias und='sudo undervolt --core -150'
+
+# git 
+alias clone='git clone'
+alias branch='git branch'
+alias commit='git commit -m'
+alias checkout='git checkout'
+alias adall='git add .'
+alias add='git add'
+
+# github cli
+alias gclone='gh repo clone '
