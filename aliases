@@ -1,7 +1,7 @@
 ### ALIASES  ### 
  
 # package manager
-alias dnfup='sudo dnf upgrade -y && sudo dnf update -y'
+alias dnfup='sudo dnf update -y && sudo dnf upgrade -y'
 alias dnfin='sudo dnf install'
 alias dnfrm='sudo dnf remove'
 alias dnfau='sudo dnf autoremove -y'
