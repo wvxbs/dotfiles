@@ -39,6 +39,8 @@ flatpak install flathub us.zoom.Zoom
 
 flatpak install flathub org.chromium.Chromium
 
+flatpak install flathub com.jetbrains.IntelliJ-IDEA-Community
+
 flatpak install flathub com.google.AndroidStudio
 
 flatpak install flathub com.getpostman.Postman
@@ -54,8 +56,6 @@ flatpak install flathub org.inkscape.Inkscape
 flatpak install flathub com.github.phase1geo.minder
 
 flatpak install flathub com.github.muriloventuroso.easyssh
-
-flatpak install flathub com.visualstudio.code
 
 flatpak install flathub io.github.lainsce.Colorway
 
