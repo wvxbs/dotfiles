@@ -48,3 +48,8 @@ alias push='git push'
 
 # github cli
 alias gclone='gh repo clone '
+
+alias src='source ~/.zshrc'
+alias cfg='sudo nvim ~/.zshrc'
+
+alias docker='sudo systemctl start docker'
