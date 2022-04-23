@@ -16,13 +16,16 @@ alias cbuild='sudo docker-compose build'
 alias cdown='sudo docker-compose down --remove-orphans'
  
 # navigation
-alias ls='ls -lah --color=auto'
+alias ls='exa -al --icons'
 alias ..='cd ..'
 alias repos='cd ~/Documentos/repos'
 alias pro='~/Documentos/Projetos'
 
 # mkdir with create parents argument
 alias mkdir='mkdir -pv'
+
+# better cat
+alias cat="bat"
  
 # better file manipulation 
 alias mv='mv -i' 

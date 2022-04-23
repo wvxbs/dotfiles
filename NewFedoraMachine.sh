@@ -4,7 +4,7 @@ sudo dnf update -y
 
 sudo dnf upgrade -y
 
-sudo dnf install -y firefox geary git neofetch npm python python3 python-pip cargo marker gnome-pomodoro dnf-plugins-core flatpak neovim zsh
+sudo dnf install -y firefox geary git neofetch npm python python3 python-pip cargo marker gnome-pomodoro dnf-plugins-core flatpak neovim zsh bat exa tokei
 
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
 sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
