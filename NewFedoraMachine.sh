@@ -33,7 +33,7 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/denysdovhan/gnome-termin
 
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
-flatpak install flathub  com.spotify.Client com.discordapp.Discord us.zoom.Zoom org.chromium.Chromium com.jetbrains.IntelliJ-IDEA-Community com.google.AndroidStudio com.getpostman.Postman org.darktable.Darktable org.gimp.GIMP org.inkscape.Inkscape com.github.phase1geo.minder com.github.muriloventuroso.easyssh io.github.lainsce.Colorway io.github.lainsce.Emulsion de.haeckerfelix.Fragments com.obsproject.Studio md.obsidian.Obsidian org.gnome.gitlab.somas.Apostrophe com.rafaelmardojai.Blanket com.rafaelmardojai.WebfontKitGenerator com.github.gi_lom.dialect
+flatpak install flathub  com.spotify.Client com.discordapp.Discord us.zoom.Zoom org.chromium.Chromium com.jetbrains.IntelliJ-IDEA-Community com.google.AndroidStudio com.getpostman.Postman org.darktable.Darktable org.gimp.GIMP org.inkscape.Inkscape com.github.phase1geo.minder com.github.muriloventuroso.easyssh io.github.lainsce.Colorway io.github.lainsce.Emulsion de.haeckerfelix.Fragments com.obsproject.Studio md.obsidian.Obsidian com.rafaelmardojai.Blanket com.rafaelmardojai.WebfontKitGenerator com.github.gi_lom.dialect
 
 sudo usermod -s /bin/zsh $user
 
