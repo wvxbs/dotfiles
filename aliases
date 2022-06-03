@@ -2,8 +2,8 @@
  
 # package manager
 alias dnfup='sudo dnf update -y && sudo dnf upgrade -y'
-alias dnfin='sudo dnf install'
-alias dnfrm='sudo dnf remove'
+alias dnfin='sudo dnf install -y'
+alias dnfrm='sudo dnf remove -y'
 alias dnfau='sudo dnf autoremove -y'
  
 # docker
@@ -56,3 +56,6 @@ alias src='source ~/.zshrc'
 alias cfg='sudo nvim ~/.zshrc'
 
 alias docker='sudo systemctl start docker'
+
+# better bashtop
+alias bashtop='bpytop'
