@@ -20,6 +20,7 @@ alias ls='exa -al --icons'
 alias ..='cd ..'
 alias repos='cd ~/Documentos/repos'
 alias pro='~/Documentos/Projetos'
+alias tools='~/Documentos/tools'
 
 # mkdir with create parents argument
 alias mkdir='mkdir -pv'
