@@ -56,7 +56,5 @@ alias gclone='gh repo clone '
 alias src='source ~/.zshrc'
 alias cfg='sudo nvim ~/.zshrc'
 
-alias docker='sudo systemctl start docker'
-
 # better bashtop
 alias bashtop='bpytop'
