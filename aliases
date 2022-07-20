@@ -31,7 +31,7 @@ alias cat="bat"
 # better file manipulation 
 alias mv='mv -i' 
 alias cp='cp -i' 
-alias rm='rm -i' 
+alias rm='rm -i -rf' 
 alias ln='ln -i' 
  
 # better vim
