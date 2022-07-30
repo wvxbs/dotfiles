@@ -58,3 +58,6 @@ alias cfg='sudo nvim ~/.zshrc'
 
 # better bashtop
 alias bashtop='bpytop'
+
+# better sudo
+alias sudo='doas'
