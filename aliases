@@ -21,6 +21,7 @@ alias ..='cd ..'
 alias repos='cd ~/Documentos/repos'
 alias pro='~/Documentos/Projetos'
 alias tools='~/Documentos/tools'
+alias shutdown='shutdown now'
 
 # mkdir with create parents argument
 alias mkdir='mkdir -pv'
