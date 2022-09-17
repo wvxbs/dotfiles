@@ -55,7 +55,7 @@ alias push='git push'
 alias gclone='gh repo clone '
 
 alias src='source ~/.zshrc'
-alias cfg='sudo nvim ~/.zshrc'
+alias cfg='nvim ~/.zshrc'
 
 # better bashtop
 alias bashtop='bpytop'
