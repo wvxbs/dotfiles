@@ -62,3 +62,9 @@ alias bashtop='bpytop'
 
 # better sudo
 alias sudo='doas'
+
+# better rm
+alias rm='rm -rf'
+
+# simpler shutdown
+alias shutdown='shutdown now'
