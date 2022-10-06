@@ -7,13 +7,13 @@ alias dnfrm='sudo dnf remove -y'
 alias dnfau='sudo dnf autoremove -y'
  
 # docker
-alias docker-run='sudo docker run'
-alias cup='sudo docker-compose up --force-recreate --remove-orphans'
-alias cupd='sudo docker-compose up --force-recreate --remove-orphans -d'
-alias cdev='sudo docker-compose -f docker-compose-dev.yml up --force-recreate --remove-orphans'
-alias cdevd='sudo docker-compose -f docker-compose-dev.yml up --force-recreate --remove-orphans -d'
-alias cbuild='sudo docker-compose build'
-alias cdown='sudo docker-compose down --remove-orphans'
+alias docker-run='docker run'
+alias cup='docker-compose up --force-recreate --remove-orphans'
+alias cupd='docker-compose up --force-recreate --remove-orphans -d'
+alias cdev='docker-compose -f docker-compose-dev.yml up --force-recreate --remove-orphans'
+alias cdevd='docker-compose -f docker-compose-dev.yml up --force-recreate --remove-orphans -d'
+alias cbuild='docker-compose build'
+alias cdown='docker-compose down --remove-orphans'
  
 # navigation
 alias ls='exa -al --icons'
