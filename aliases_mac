@@ -1,0 +1,53 @@
+######################
+### ALIASES - macOS ###
+######################
+
+# package manager
+alias brewup='brew update && brew upgrade && brew cleanup'
+alias brewin='brew install'
+alias brewrm='brew uninstall'
+
+# docker
+alias docker-run='docker run'
+alias cup='docker compose up --force-recreate --remove-orphans'
+alias cupd='docker compose up --force-recreate --remove-orphans -d'
+alias cdev='docker compose -f docker-compose-dev.yml up --force-recreate --remove-orphans'
+alias cdevd='docker compose -f docker-compose-dev.yml up --force-recreate --remove-orphans -d'
+alias cbuild='docker compose build'
+alias cdown='docker compose down --remove-orphans'
+
+# navigation
+alias ..='cd ..'
+alias repos='cd ~/Documents/repos'
+alias pro='cd ~/Documents/Projetos'
+alias tools='cd ~/Documents/tools'
+
+# mkdir with create parents argument
+alias mkdir='mkdir -pv'
+
+# better file manipulation
+alias mv='mv -i'
+alias cp='cp -i'
+alias rm='rm -i'
+alias ln='ln -i'
+
+# better vim
+# alias vim='nvim'
+# alias svim='sudo nvim'
+
+# git
+alias clone='git clone'
+alias branch='git branch'
+alias commit='git commit -m'
+alias checkout='git checkout'
+alias adall='git add .'
+alias add='git add'
+alias push='git push'
+
+# github cli
+alias gclone='gh repo clone'
+
+# shell
+alias src='source ~/.zshrc'
+alias cfg='nvim ~/.zshrc'
+alias aliases='nvim ~/Documents/tools/dotfiles/aliases_mac'
