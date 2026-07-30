@@ -17,10 +17,9 @@ alias cbuild='docker compose build'
 alias cdown='docker compose down --remove-orphans'
 
 # navigation
-alias ..='cd ..'
 alias repos='cd ~/Documents/repos'
-alias pro='cd ~/Documents/Projetos'
 alias tools='cd ~/Documents/tools'
+alias ls='eza -al --icons'
 
 # mkdir with create parents argument
 alias mkdir='mkdir -pv'
