@@ -1,8 +1,7 @@
-# Contextos pessoal e CWS para Git, GitHub CLI, Docker e VS Code.
+# Contextos pessoal e CWS para Git, GitHub CLI e Docker.
 #
 # O gh guarda as duas contas no keyring e a troca é explícita. Não usamos um
-# GH_CONFIG_DIR separado: isso faria o gh, o Git e o VS Code discordarem sobre
-# qual conta está ativa.
+# GH_CONFIG_DIR separado para manter o gh e o Git na mesma conta ativa.
 export CWS_HOME="${CWS_HOME:-$HOME/Documents/Trabalho/cws}"
 export PATH="$HOME/Documents/tools/dotfiles/bin:$PATH"
 

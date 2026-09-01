@@ -125,15 +125,6 @@ gh() {
   command gh "$@"
 }
 
-# VS Code por contexto
-code() {
-  if _in_cws_context; then
-    command code --profile "CWS Digital" "$@"
-  else
-    command code "$@"
-  fi
-}
-
 # Shell e dotfiles
 alias src='source ~/.zshrc'
 alias cfg='nvim ~/.zshrc'
