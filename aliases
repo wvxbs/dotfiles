@@ -56,18 +56,12 @@ _docker_active_user() {
 }
 
 whoami() {
-  local github_user expected_github_user git_name git_email docker_user
+  local github_user git_name git_email docker_user
 
   command whoami
 
-  expected_github_user="$(_github_expected_user)"
+  _sync_github_context
   github_user="$(_github_active_user)"
-  if [[ -n "$expected_github_user" && "$github_user" != "$expected_github_user" ]]; then
-    command gh auth switch \
-      --hostname github.com \
-      --user "$expected_github_user" >/dev/null 2>&1
-    github_user="$(_github_active_user)"
-  fi
 
   if _in_cws_context && ! command git rev-parse --git-dir >/dev/null 2>&1; then
     git_name="$(command git config --file "$CWS_HOME/.gitconfig" user.name 2>/dev/null)"
@@ -127,17 +121,7 @@ alias ghp='command gh auth switch --hostname github.com --user wvxbs'
 alias ghs='github-status'
 
 gh() {
-  local active_user expected_user
-
-  active_user="$(_github_active_user)"
-  expected_user="$(_github_expected_user)"
-
-  if [[ "$active_user" != "$expected_user" ]]; then
-    command gh auth switch \
-      --hostname github.com \
-      --user "$expected_user" || return
-  fi
-
+  _sync_github_context
   command gh "$@"
 }
 
