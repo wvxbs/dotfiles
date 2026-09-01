@@ -1,48 +1,105 @@
-### ALIASES  ### 
- 
-# package manager
-alias dnfup='sudo dnf update -y && sudo dnf upgrade -y'
-alias dnfin='sudo dnf install -y'
-alias dnfrm='sudo dnf remove -y'
-alias dnfau='sudo dnf autoremove -y'
- 
-# docker
+##############################
+### ALIASES — macOS / wvxbs ###
+##############################
+
+# Homebrew
+alias brewup='brew update && brew upgrade && brew cleanup'
+alias brewin='brew install'
+alias brewrm='brew uninstall'
+
+# Docker
 alias docker-run='docker run'
-alias cup='docker-compose up --force-recreate --remove-orphans'
-alias cupd='docker-compose up --force-recreate --remove-orphans -d'
-alias cdev='docker-compose -f docker-compose-dev.yml up --force-recreate --remove-orphans'
-alias cdevd='docker-compose -f docker-compose-dev.yml up --force-recreate --remove-orphans -d'
-alias cbuild='docker-compose build'
-alias cdown='docker-compose down --remove-orphans'
- 
-# navigation
-alias ls='exa -al --icons'
+alias cup='docker compose up --force-recreate --remove-orphans'
+alias cupd='docker compose up --force-recreate --remove-orphans -d'
+alias cdev='docker compose -f docker-compose-dev.yml up --force-recreate --remove-orphans'
+alias cdevd='docker compose -f docker-compose-dev.yml up --force-recreate --remove-orphans -d'
+alias cbuild='docker compose build'
+alias cdown='docker compose down --remove-orphans'
+
+# Navegação pessoal
+alias ls='eza -al --icons -I ".DS_Store"'
 alias ..='cd ..'
-alias repos='cd ~/Documentos/repos'
-alias pro='~/Documentos/Projetos'
-alias tools='~/Documentos/tools'
-alias shutdown='shutdown now'
 
-# mkdir with create parents argument
+_in_cws_context() {
+  [[ "$PWD/" == "$CWS_HOME/"* ]]
+}
+
+_docker_active_user() {
+  local config_dir="$HOME/.docker"
+  local credential_store helper server user
+
+  if _in_cws_context; then
+    config_dir="$CWS_HOME/.docker"
+  fi
+
+  credential_store="$(
+    command jq -r '.credsStore // empty' "$config_dir/config.json" 2>/dev/null
+  )"
+  [[ -z "$credential_store" ]] && return 1
+
+  helper="docker-credential-$credential_store"
+  for server in \
+    'https://index.docker.io/v1/' \
+    'https://index.docker.io/v1' \
+    'registry-1.docker.io'; do
+    user="$(
+      print -rn -- "$server" | command "$helper" get 2>/dev/null |
+        command jq -r '.Username // empty' 2>/dev/null
+    )"
+    if [[ -n "$user" && "$user" != '<token>' ]]; then
+      print -r -- "$user"
+      return 0
+    fi
+  done
+
+  return 1
+}
+
+whoami() {
+  local github_user git_name git_email docker_user
+
+  command whoami
+
+  github_user="$(_github_active_user)"
+  git_name="$(command git config user.name 2>/dev/null)"
+  git_email="$(command git config user.email 2>/dev/null)"
+  docker_user="$(_docker_active_user)"
+
+  print -r -- "GitHub : ${github_user:-não autenticado}"
+  print -r -- "Git    : ${git_name:-não configurado}${git_email:+ <$git_email>}"
+  print -r -- "Docker : ${docker_user:-não autenticado}"
+}
+
+_context_cd() {
+  local target="$1"
+
+  if _in_cws_context; then
+    builtin cd -- "$CWS_HOME/$target"
+  else
+    builtin cd -- "$HOME/Documents/$target"
+  fi
+}
+
+repos() { _context_cd repos; }
+tools() { _context_cd tools; }
+
+# Navegação CWS
+alias cwshome='cd "$CWS_HOME"'
+alias procws='cd "$CWS_HOME"'
+
+# Arquivos
 alias mkdir='mkdir -pv'
+alias cat='bat'
+alias mv='mv -i'
+alias cp='cp -i'
+alias rm='rm -i'
+alias ln='ln -i'
 
-# better cat
-alias cat="bat"
- 
-# better file manipulation 
-alias mv='mv -i' 
-alias cp='cp -i' 
-alias rm='rm -i -rf' 
-alias ln='ln -i' 
- 
-# better vim
-alias vim='nvim' 
+# Editor
+alias vim='nvim'
 alias svim='sudo nvim'
 
-# undervolt 
-alias und='sudo undervolt --core -150'
-
-# git 
+# Git
 alias clone='git clone'
 alias branch='git branch'
 alias commit='git commit -m'
@@ -51,20 +108,37 @@ alias adall='git add .'
 alias add='git add'
 alias push='git push'
 
-# github cli
-alias gclone='gh repo clone '
+# GitHub CLI
+alias gclone='gh repo clone'
+alias ghp='command gh auth switch --hostname github.com --user wvxbs'
+alias ghs='github-status'
 
+gh() {
+  local active_user expected_user
+
+  active_user="$(_github_active_user)"
+  expected_user="$(_github_expected_user)"
+
+  if [[ "$active_user" != "$expected_user" ]]; then
+    command gh auth switch \
+      --hostname github.com \
+      --user "$expected_user" || return
+  fi
+
+  command gh "$@"
+}
+
+# VS Code por contexto
+code() {
+  if _in_cws_context; then
+    command code --profile "CWS Digital" "$@"
+  else
+    command code "$@"
+  fi
+}
+
+# Shell e dotfiles
 alias src='source ~/.zshrc'
 alias cfg='nvim ~/.zshrc'
-
-# better bashtop
-alias bashtop='bpytop'
-
-# better sudo
-alias sudo='doas'
-
-# better rm
-alias rm='rm -rf'
-
-# simpler shutdown
-alias shutdown='shutdown now'
+alias aliases='nvim "$HOME/Documents/tools/dotfiles/aliases"'
+alias cws='cd "$HOME/Documents/Trabalho/cws"'
