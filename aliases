@@ -56,13 +56,26 @@ _docker_active_user() {
 }
 
 whoami() {
-  local github_user git_name git_email docker_user
+  local github_user expected_github_user git_name git_email docker_user
 
   command whoami
 
+  expected_github_user="$(_github_expected_user)"
   github_user="$(_github_active_user)"
-  git_name="$(command git config user.name 2>/dev/null)"
-  git_email="$(command git config user.email 2>/dev/null)"
+  if [[ -n "$expected_github_user" && "$github_user" != "$expected_github_user" ]]; then
+    command gh auth switch \
+      --hostname github.com \
+      --user "$expected_github_user" >/dev/null 2>&1
+    github_user="$(_github_active_user)"
+  fi
+
+  if _in_cws_context && ! command git rev-parse --git-dir >/dev/null 2>&1; then
+    git_name="$(command git config --file "$CWS_HOME/.gitconfig" user.name 2>/dev/null)"
+    git_email="$(command git config --file "$CWS_HOME/.gitconfig" user.email 2>/dev/null)"
+  else
+    git_name="$(command git config user.name 2>/dev/null)"
+    git_email="$(command git config user.email 2>/dev/null)"
+  fi
   docker_user="$(_docker_active_user)"
 
   print -r -- "GitHub : ${github_user:-não autenticado}"
