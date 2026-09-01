@@ -125,6 +125,29 @@ gh() {
   command gh "$@"
 }
 
+_vscode_profile_exists() {
+  local storage_file profile_location
+
+  storage_file="$HOME/Library/Application Support/Code/User/globalStorage/storage.json"
+  profile_location="$(
+    command jq -r \
+      --arg name "CWS Digital" \
+      '.userDataProfiles[]? | select(.name == $name) | .location' \
+      "$storage_file" 2>/dev/null
+  )"
+
+  [[ -n "$profile_location" &&
+     -d "$HOME/Library/Application Support/Code/User/profiles/$profile_location" ]]
+}
+
+code() {
+  if _in_cws_context && _vscode_profile_exists; then
+    command code --profile "CWS Digital" "$@"
+  else
+    command code "$@"
+  fi
+}
+
 # Shell e dotfiles
 alias src='source ~/.zshrc'
 alias cfg='nvim ~/.zshrc'
