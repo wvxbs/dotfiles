@@ -28,7 +28,7 @@ _docker_active_user() {
   local config_dir="$HOME/.docker"
   local credential_store helper server user
 
-  if _in_cws_context; then
+  if [[ "$(uname -s)" == "Darwin" ]] && _in_cws_context; then
     config_dir="$CWS_HOME/.docker"
   fi
 

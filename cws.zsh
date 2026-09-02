@@ -48,7 +48,7 @@ docker() {
   local config_dir="$HOME/.docker"
   local docker_cli
 
-  if [[ "$PWD/" == "$CWS_HOME/"* ]]; then
+  if [[ "$(uname -s)" == "Darwin" && "$PWD/" == "$CWS_HOME/"* ]]; then
     config_dir="$CWS_HOME/.docker"
   fi
 
