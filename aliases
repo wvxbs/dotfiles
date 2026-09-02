@@ -93,6 +93,7 @@ tools() { _context_cd tools; }
 # Navegação CWS
 alias cwshome='cd "$CWS_HOME"'
 alias procws='cd "$CWS_HOME"'
+alias ipcws='"$CWS_HOME/tools/helpers/.venv/bin/python" "$CWS_HOME/tools/helpers/ip_message_generator.py"'
 
 # Arquivos
 alias mkdir='mkdir -pv'
