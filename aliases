@@ -134,24 +134,13 @@ gh() {
   command gh "$@"
 }
 
-_vscode_profile_exists() {
-  local storage_file profile_location
-
-  storage_file="$HOME/Library/Application Support/Code/User/globalStorage/storage.json"
-  profile_location="$(
-    command jq -r \
-      --arg name "CWS Digital" \
-      '.userDataProfiles[]? | select(.name == $name) | .location' \
-      "$storage_file" 2>/dev/null
-  )"
-
-  [[ -n "$profile_location" &&
-     -d "$HOME/Library/Application Support/Code/User/profiles/$profile_location" ]]
-}
-
 code() {
-  if _in_cws_context && _vscode_profile_exists; then
-    command code --profile "CWS Digital" "$@"
+  if _in_cws_context; then
+    command code \
+      --user-data-dir "$CWS_HOME/.vscode-cws/user-data" \
+      --extensions-dir "$CWS_HOME/.vscode-cws/extensions" \
+      --new-window \
+      "$@"
   else
     command code "$@"
   fi

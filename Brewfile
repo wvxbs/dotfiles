@@ -1,0 +1,73 @@
+tap "antoniorodr/memo"
+tap "epk/epk", trusted: true
+tap "openhue/cli"
+tap "rakalex/mac-brightnessctl"
+tap "steipete/tap"
+tap "xdevplatform/tap"
+brew "abseil"
+brew "bat"
+brew "eza"
+brew "ffmpeg"
+brew "gh"
+brew "himalaya"
+brew "jq"
+brew "neovim"
+brew "node"
+brew "poetry"
+brew "rlwrap"
+brew "sbcl"
+brew "summarize"
+brew "swi-prolog"
+brew "tmux"
+brew "tree"
+brew "uv"
+brew "antoniorodr/memo/memo", trusted: true
+brew "openhue/cli/openhue-cli", trusted: true
+brew "rakalex/mac-brightnessctl/mac-brightnessctl", trusted: true
+brew "steipete/tap/camsnap", trusted: true
+brew "steipete/tap/codexbar", trusted: true
+brew "steipete/tap/gifgrep", trusted: true
+brew "steipete/tap/ordercli", trusted: true
+brew "steipete/tap/peekaboo", trusted: true
+brew "steipete/tap/remindctl", trusted: true
+brew "steipete/tap/sag", trusted: true
+brew "steipete/tap/songsee", trusted: true
+cask "monitorcontrol"
+cask "pearcleaner"
+cask "tg-pro"
+cask "xdevplatform/tap/xurl", trusted: true
+vscode "arthurwang.vsc-prolog"
+vscode "danlambiase.lmstudio-copilot-provider"
+vscode "github.github-vscode-theme"
+vscode "github.remotehub"
+vscode "github.vscode-github-actions"
+vscode "mattn.lisp"
+vscode "ms-azuretools.vscode-containers"
+vscode "ms-dotnettools.csharp"
+vscode "ms-dotnettools.vscode-dotnet-runtime"
+vscode "ms-python.debugpy"
+vscode "ms-python.python"
+vscode "ms-python.vscode-pylance"
+vscode "ms-python.vscode-python-envs"
+vscode "ms-toolsai.datawrangler"
+vscode "ms-toolsai.jupyter"
+vscode "ms-toolsai.jupyter-keymap"
+vscode "ms-toolsai.jupyter-renderers"
+vscode "ms-toolsai.vscode-jupyter-cell-tags"
+vscode "ms-toolsai.vscode-jupyter-slideshow"
+vscode "ms-vscode-remote.remote-containers"
+vscode "ms-vscode-remote.remote-ssh"
+vscode "ms-vscode-remote.remote-ssh-edit"
+vscode "ms-vscode-remote.remote-wsl"
+vscode "ms-vscode.remote-explorer"
+vscode "ms-vscode.remote-repositories"
+vscode "ms-vscode.remote-server"
+vscode "ms-vscode.vscode-serial-monitor"
+vscode "qingpeng.common-lisp"
+vscode "redhat.fabric8-analytics"
+vscode "redhat.vscode-yaml"
+vscode "reditorsupport.r-syntax"
+vscode "shd101wyy.markdown-preview-enhanced"
+vscode "syler.sass-indented"
+vscode "vscjava.migrate-java-to-azure"
+npm "openclaw"

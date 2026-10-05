@@ -1,0 +1,9 @@
+#!/bin/sh
+set -eu
+
+cws_home="${CWS_HOME:-$HOME/Documents/Trabalho/cws}"
+
+exec /usr/local/bin/code \
+  --user-data-dir "$cws_home/.vscode-cws/user-data" \
+  --extensions-dir "$cws_home/.vscode-cws/extensions" \
+  --new-window "$@"

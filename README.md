@@ -32,14 +32,15 @@ caminho do repositório.
 
 ## VS Code
 
-Dentro de `~/Documents/Trabalho/cws`, o wrapper `code` usa o profile existente
-`CWS Digital`. Antes de passar `--profile`, ele confirma que o profile está
-registrado e que seu diretório existe. Se o profile tiver sido removido ou
-estiver sendo recriado, executa o `code` normal sem criar ou sobrescrever nada.
+Dentro de `~/Documents/Trabalho/cws`, o wrapper `code` abre uma instância
+isolada: dados, extensões e autenticação ficam em `cws/.vscode-cws/`.
+`code .` (ou `code` sem argumentos) abre o workspace `cws.code-workspace`;
+outros argumentos continuam abrindo o alvo solicitado na mesma instância
+isolada. Fora de `cws`, `code` executa normalmente.
 
 O arquivo `~/.zshrc` deve carregar, nesta ordem:
 
 ```zsh
-source "$HOME/Documents/tools/dotfiles/aliases"
 source "$HOME/Documents/tools/dotfiles/cws.zsh"
+source "$HOME/Documents/tools/dotfiles/aliases"
 ```
