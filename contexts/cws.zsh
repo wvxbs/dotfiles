@@ -1,0 +1,129 @@
+##############################
+### CONTEXTO CWS           ###
+##############################
+
+# Configurações Iniciais
+export CWS_HOME="${CWS_HOME:-$HOME/Documents/Trabalho/cws}"
+export PATH="$HOME/Documents/tools/dotfiles/bin:$PATH"
+typeset -g GITHUB_PERSONAL_USER="wvxbs"
+typeset -g GITHUB_WORK_USER="gabriel-ferreira-cws"
+
+# Aliases de Navegação Específicos
+alias cws='cd "$CWS_HOME"'
+alias cwshome='cd "$CWS_HOME"'
+alias procws='cd "$CWS_HOME"'
+alias ghp='command gh auth switch --hostname github.com --user wvxbs'
+alias ghs='github-status'
+
+# Utilitários de Checagem
+_in_cws_context() {
+  [[ "$PWD/" == "$CWS_HOME/"* ]]
+}
+
+_context_cd() {
+  local target="$1"
+  if _in_cws_context; then
+    builtin cd -- "$CWS_HOME/$target"
+  else
+    builtin cd -- "$HOME/Documents/$target"
+  fi
+}
+repos() { _context_cd repos; }
+tools() { _context_cd tools; }
+
+_ipcws() {
+  local helpers_dir="$CWS_HOME/tools/helpers"
+  local python="$helpers_dir/.venv/bin/python"
+  [[ -x "$python" ]] || python="$(command -v python3)"
+  "$python" "$helpers_dir/ip_message_generator.py" "$@"
+}
+alias ipcws='_ipcws'
+
+# Lógica do GitHub CLI
+_github_active_user() {
+  command gh auth status --active --hostname github.com --json hosts --jq '.hosts["github.com"][0].login' 2>/dev/null
+}
+
+_github_expected_user() {
+  case "$PWD/" in
+    "$CWS_HOME"/*) print -r -- "$GITHUB_WORK_USER" ;;
+    *)             print -r -- "$GITHUB_PERSONAL_USER" ;;
+  esac
+}
+
+_sync_github_context() {
+  local active_user expected_user
+  active_user="$(_github_active_user)"
+  expected_user="$(_github_expected_user)"
+  if [[ -n "$expected_user" && "$active_user" != "$expected_user" ]]; then
+    command gh auth switch --hostname github.com --user "$expected_user" >/dev/null 2>&1
+  fi
+}
+
+autoload -Uz add-zsh-hook
+add-zsh-hook -d chpwd _sync_github_context 2>/dev/null
+add-zsh-hook chpwd _sync_github_context
+_sync_github_context
+
+
+gh() {
+  _sync_github_context
+  command gh "$@"
+}
+
+code() {
+  if _in_cws_context; then
+    command code --profile "CWS" "$@"
+  else
+    command code "$@"
+  fi
+}
+
+# Funções de Status Integradas
+github-status() {
+  local active_user expected_user git_name git_email remote repo_root
+  active_user="$(_github_active_user)"
+  expected_user="$(_github_expected_user)"
+  [[ -z "$active_user" ]] && active_user="indisponível"
+
+  if repo_root="$(command git rev-parse --show-toplevel 2>/dev/null)"; then
+    git_name="$(command git config user.name 2>/dev/null)"
+    git_email="$(command git config user.email 2>/dev/null)"
+    remote="$(command git remote get-url origin 2>/dev/null)"
+    [[ -z "$remote" ]] && remote="sem origin"
+  else
+    repo_root="fora de um repositório Git"
+    git_name="$(command git config --global user.name 2>/dev/null)"
+    git_email="$(command git config --global user.email 2>/dev/null)"
+    remote="n/a"
+  fi
+
+  print -r -- "GitHub CLI : $active_user"
+  print -r -- "Esperado   : $expected_user"
+  print -r -- "Autor Git  : $git_name <$git_email>"
+  print -r -- "Repositório: $repo_root"
+  print -r -- "Remote     : $remote"
+
+  if [[ "$active_user" != "$expected_user" ]]; then
+    print -u2 -r -- "AVISO: a conta ativa não corresponde ao contexto desta pasta."
+  fi
+  return 0
+}
+
+whoami() {
+  local github_user git_name git_email
+  command whoami
+  _sync_github_context
+  github_user="$(_github_active_user)"
+
+  if _in_cws_context && ! command git rev-parse --git-dir >/dev/null 2>&1; then
+    git_name="$(command git config --file "$CWS_HOME/.gitconfig" user.name 2>/dev/null)"
+    git_email="$(command git config --file "$CWS_HOME/.gitconfig" user.email 2>/dev/null)"
+  else
+    git_name="$(command git config user.name 2>/dev/null)"
+    git_email="$(command git config user.email 2>/dev/null)"
+  fi
+
+  print -r -- "GitHub : ${github_user:-não autenticado}"
+  print -r -- "Git    : ${git_name:-não configurado}${git_email:+ <$git_email>}"
+}

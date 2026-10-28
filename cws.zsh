@@ -1,7 +1,3 @@
-# Contextos pessoal e CWS para Git, GitHub CLI e Docker.
-#
-# O gh guarda as duas contas no keyring e a troca é explícita. Não usamos um
-# GH_CONFIG_DIR separado para manter o gh e o Git na mesma conta ativa.
 export CWS_HOME="${CWS_HOME:-$HOME/Documents/Trabalho/cws}"
 export PATH="$HOME/Documents/tools/dotfiles/bin:$PATH"
 
@@ -41,29 +37,6 @@ add-zsh-hook -d chpwd _sync_github_context 2>/dev/null
 add-zsh-hook chpwd _sync_github_context
 _sync_github_context
 
-# Mantém configurações e credenciais do Docker isoladas por contexto. O helper
-# CWS adiciona um namespace ao registro antes de delegar ao Keychain do macOS,
-# permitindo que as duas contas do Docker Hub coexistam com segurança.
-docker() {
-  local config_dir="$HOME/.docker"
-  local docker_cli
-
-  if [[ "$(uname -s)" == "Darwin" && "$PWD/" == "$CWS_HOME/"* ]]; then
-    config_dir="$CWS_HOME/.docker"
-  fi
-
-  docker_cli="$(whence -p docker 2>/dev/null)"
-  if [[ -z "$docker_cli" ]]; then
-    docker_cli="/Applications/Docker.app/Contents/Resources/bin/docker"
-  fi
-
-  if [[ ! -x "$docker_cli" ]]; then
-    print -u2 -r -- "docker: CLI não encontrado"
-    return 127
-  fi
-
-  DOCKER_CONFIG="$config_dir" command "$docker_cli" "$@"
-}
 
 github-status() {
   local active_user expected_user git_name git_email remote repo_root

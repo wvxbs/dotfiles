@@ -1,109 +1,10 @@
 ##############################
-### ALIASES — macOS / wvxbs ###
+### ALIASES — BASE         ###
 ##############################
 
-# Homebrew
-alias brewup='brew update && brew upgrade && brew cleanup'
-alias brewin='brew install'
-alias brewrm='brew uninstall'
-
-# Docker
-alias docker-run='docker run'
-alias cup='docker compose up --force-recreate --remove-orphans'
-alias cupd='docker compose up --force-recreate --remove-orphans -d'
-alias cdev='docker compose -f docker-compose-dev.yml up --force-recreate --remove-orphans'
-alias cdevd='docker compose -f docker-compose-dev.yml up --force-recreate --remove-orphans -d'
-alias cbuild='docker compose build'
-alias cdown='docker compose down --remove-orphans'
-
-# Navegação pessoal
+# Navegação e Arquivos[cite: 1]
 alias ls='eza -al --icons -I ".DS_Store"'
 alias ..='cd ..'
-
-_in_cws_context() {
-  [[ "$PWD/" == "$CWS_HOME/"* ]]
-}
-
-_docker_active_user() {
-  local config_dir="$HOME/.docker"
-  local credential_store helper server user
-
-  if [[ "$(uname -s)" == "Darwin" ]] && _in_cws_context; then
-    config_dir="$CWS_HOME/.docker"
-  fi
-
-  credential_store="$(
-    command jq -r '.credsStore // empty' "$config_dir/config.json" 2>/dev/null
-  )"
-  [[ -z "$credential_store" ]] && return 1
-
-  helper="docker-credential-$credential_store"
-  for server in \
-    'https://index.docker.io/v1/' \
-    'https://index.docker.io/v1' \
-    'registry-1.docker.io'; do
-    user="$(
-      print -rn -- "$server" | command "$helper" get 2>/dev/null |
-        command jq -r '.Username // empty' 2>/dev/null
-    )"
-    if [[ -n "$user" && "$user" != '<token>' ]]; then
-      print -r -- "$user"
-      return 0
-    fi
-  done
-
-  return 1
-}
-
-whoami() {
-  local github_user git_name git_email docker_user
-
-  command whoami
-
-  _sync_github_context
-  github_user="$(_github_active_user)"
-
-  if _in_cws_context && ! command git rev-parse --git-dir >/dev/null 2>&1; then
-    git_name="$(command git config --file "$CWS_HOME/.gitconfig" user.name 2>/dev/null)"
-    git_email="$(command git config --file "$CWS_HOME/.gitconfig" user.email 2>/dev/null)"
-  else
-    git_name="$(command git config user.name 2>/dev/null)"
-    git_email="$(command git config user.email 2>/dev/null)"
-  fi
-  docker_user="$(_docker_active_user)"
-
-  print -r -- "GitHub : ${github_user:-não autenticado}"
-  print -r -- "Git    : ${git_name:-não configurado}${git_email:+ <$git_email>}"
-  print -r -- "Docker : ${docker_user:-não autenticado}"
-}
-
-_context_cd() {
-  local target="$1"
-
-  if _in_cws_context; then
-    builtin cd -- "$CWS_HOME/$target"
-  else
-    builtin cd -- "$HOME/Documents/$target"
-  fi
-}
-
-repos() { _context_cd repos; }
-tools() { _context_cd tools; }
-
-# Navegação CWS
-alias cwshome='cd "$CWS_HOME"'
-alias procws='cd "$CWS_HOME"'
-
-_ipcws() {
-  local helpers_dir="$CWS_HOME/tools/helpers"
-  local python="$helpers_dir/.venv/bin/python"
-
-  [[ -x "$python" ]] || python="$(command -v python3)"
-  "$python" "$helpers_dir/ip_message_generator.py" "$@"
-}
-alias ipcws='_ipcws'
-
-# Arquivos
 alias mkdir='mkdir -pv'
 alias cat='bat'
 alias mv='mv -i'
@@ -111,43 +12,24 @@ alias cp='cp -i'
 alias rm='rm -i'
 alias ln='ln -i'
 
-# Editor
+# Editor[cite: 1]
 alias vim='nvim'
 alias svim='sudo nvim'
 
-# Git
-alias clone='git clone'
-alias branch='git branch'
-alias commit='git commit -m'
-alias checkout='git checkout'
-alias adall='git add .'
-alias add='git add'
-alias push='git push'
-
-# GitHub CLI
-alias gclone='gh repo clone'
-alias ghp='command gh auth switch --hostname github.com --user wvxbs'
-alias ghs='github-status'
-
-gh() {
-  _sync_github_context
-  command gh "$@"
-}
-
-code() {
-  if _in_cws_context; then
-    command code \
-      --user-data-dir "$CWS_HOME/.vscode-cws/user-data" \
-      --extensions-dir "$CWS_HOME/.vscode-cws/extensions" \
-      --new-window \
-      "$@"
-  else
-    command code "$@"
-  fi
-}
-
-# Shell e dotfiles
+# Shell e dotfiles[cite: 1]
 alias src='source ~/.zshrc'
 alias cfg='nvim ~/.zshrc'
 alias aliases='nvim "$HOME/Documents/tools/dotfiles/aliases"'
-alias cws='cd "$HOME/Documents/Trabalho/cws"'
+alias bashtop='bpytop'
+
+########################################
+### CARREGADOR DE CONTEXTOS (LOADER) ###
+########################################
+# Procura por arquivos .zsh dentro da pasta 'contexts' e os executa.
+# Basta criar arquivos lá dentro para adicionar um contexto, ou remover para desligar.
+DOTFILES_DIR="$HOME/Documents/tools/dotfiles"
+if [[ -d "$DOTFILES_DIR/contexts" ]]; then
+  for ctx_file in "$DOTFILES_DIR/contexts"/*.zsh(N); do
+    [[ -f "$ctx_file" ]] && source "$ctx_file"
+  done
+fi
