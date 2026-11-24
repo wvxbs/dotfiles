@@ -2,9 +2,8 @@
 ### ALIASES — BASE         ###
 ##############################
 
-# Navegação e Arquivos[cite: 1]
+# Navegação e Arquivos
 alias ls='eza -al --icons -I ".DS_Store"'
-alias ..='cd ..'
 alias mkdir='mkdir -pv'
 alias cat='bat'
 alias mv='mv -i'
@@ -12,14 +11,14 @@ alias cp='cp -i'
 alias rm='rm -i'
 alias ln='ln -i'
 
-# Editor[cite: 1]
+# Editor
 alias vim='nvim'
 alias svim='sudo nvim'
 
-# Shell e dotfiles[cite: 1]
+# Shell e dotfiles
 alias src='source ~/.zshrc'
 alias cfg='nvim ~/.zshrc'
-alias aliases='nvim "$HOME/Documents/tools/dotfiles/aliases"'
+alias aliases='nvim "$HOME/Desenvolvimento/tools/dotfiles/aliases"'
 alias bashtop='bpytop'
 
 ########################################
@@ -27,7 +26,7 @@ alias bashtop='bpytop'
 ########################################
 # Procura por arquivos .zsh dentro da pasta 'contexts' e os executa.
 # Basta criar arquivos lá dentro para adicionar um contexto, ou remover para desligar.
-DOTFILES_DIR="$HOME/Documents/tools/dotfiles"
+DOTFILES_DIR="$HOME/Desenvolvimento/tools/dotfiles"
 if [[ -d "$DOTFILES_DIR/contexts" ]]; then
   for ctx_file in "$DOTFILES_DIR/contexts"/*.zsh(N); do
     [[ -f "$ctx_file" ]] && source "$ctx_file"
