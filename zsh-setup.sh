@@ -42,12 +42,45 @@ echo "Dotfiles:   $DOTFILES_DIR"
 # Default shell
 # --------------------------------------------------
 
-CURRENT_SHELL="$(getent passwd "$USER" 2>/dev/null | cut -d: -f7 || true)"
+ZSH_BIN="$(command -v zsh)"
+
+if [[ ! -x "$ZSH_BIN" ]]; then
+    echo "Erro: executável do Zsh inválido: $ZSH_BIN"
+    exit 1
+fi
+
+# Reuse an existing /etc/shells entry pointing to
+# the same executable, including symlinks.
+REGISTERED_ZSH=""
+
+if [[ -r /etc/shells ]]; then
+    while IFS= read -r shell; do
+        [[ -x "$shell" ]] || continue
+
+        if [[ "$shell" -ef "$ZSH_BIN" ]]; then
+            REGISTERED_ZSH="$shell"
+            break
+        fi
+    done < /etc/shells
+fi
+
+if [[ -n "$REGISTERED_ZSH" ]]; then
+    ZSH_BIN="$REGISTERED_ZSH"
+else
+    echo "Registrando $ZSH_BIN em /etc/shells..."
+
+    printf '%s\n' "$ZSH_BIN" | sudo tee -a /etc/shells >/dev/null
+fi
+
+CURRENT_SHELL="$(getent passwd "$USER" | cut -d: -f7)"
 
 if [[ "$CURRENT_SHELL" != "$ZSH_BIN" ]]; then
     echo "Alterando shell padrão para $ZSH_BIN..."
     chsh -s "$ZSH_BIN"
+else
+    echo "Zsh já é o shell padrão."
 fi
+
 
 # --------------------------------------------------
 # Oh My Zsh
