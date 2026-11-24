@@ -1,0 +1,22 @@
+##############################
+# CONTEXT TEMPLATE
+##############################
+
+register_context \
+  "CONTEXT_NAME" \
+  "$HOME/Desenvolvimento/CONTEXT_NAME/" \
+  "" \
+  "" \
+  "" \
+  "$HOME/Desenvolvimento/CONTEXT_NAME"
+
+# Optional environment variables
+# export CONTEXT_VARIABLE="value"
+
+# Optional aliases
+# alias context-command='command'
+
+# Optional functions
+# context_function() {
+#   ...
+# }
